@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatDisplayComponent } from './chat-display/chat-display.component';
 import { RouterModule, Routes } from '@angular/router';
+import { StoreModule } from '@ngrx/store/src';
+import { chatReducer } from './chat-reducer';
 
 const routes: Routes = [
   { path: 'contacts', component: ChatListComponent },
@@ -19,7 +21,8 @@ const routes: Routes = [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    StoreModule.forRoot({ message: chatReducer })
   ],
   declarations: [AppComponent, ChatListComponent, ChatDisplayComponent],
   bootstrap: [AppComponent]

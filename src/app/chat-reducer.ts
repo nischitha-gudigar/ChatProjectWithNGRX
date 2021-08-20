@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { setMessage } from './counter.actions';
+import { setMessage } from './chat.action';
 export const initialSMsg = 'Hello World';
 
 const _chatReducer = createReducer(
