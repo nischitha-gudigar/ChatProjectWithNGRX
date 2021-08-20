@@ -15,11 +15,11 @@
   </div>
   <div class="card cardmsg">
     <p class="receivermsg">{{selectedChatData?.content}}</p>
-    <div *ngFor="let item of messageForDisplay">
+    <!-- <div *ngFor="let item of messageForDisplay">
       <p class="sendermsg">
         {{item}}
       </p>
-    </div>
+    </div> -->
   </div>
   <div class="card-body">
     <form (ngSubmit)="saveMessage()" [formGroup]="messageForm">
