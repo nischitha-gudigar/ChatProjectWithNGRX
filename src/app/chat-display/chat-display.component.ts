@@ -35,7 +35,8 @@ export class ChatDisplayComponent implements OnInit {
   }
 
   saveMessage() {
-    console.log(this.messageForm.value.message);
+    console.log('Hii');
+    console.log(this.messageForm);
     this.messageForm.reset();
   }
 
