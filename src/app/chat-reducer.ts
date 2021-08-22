@@ -1,19 +1,16 @@
-import { createReducer, on } from '@ngrx/store';
-import { setMessage } from './chat.action';
-export const initialSMsg = 'Hello World';
+import { createReducer, on, Action } from '@ngrx/store';
+import { chatActionState } from './app.state';
+import { addChat } from './chat.action';
+
+export const initialState: chatActionState = {
+  chats: []
+};
 
 const _chatReducer = createReducer(
-  initialSMsg,
-  on(setMessage, (state, payload) => {
-    return state;
-  })
+  initialState,
+  on(addChat, (state, { chatData }) => [...chatData])
 );
 
 export function chatReducer(state, action) {
   return _chatReducer(state, action);
 }
-
-/*
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://github.com/ngrx/platform
-*/

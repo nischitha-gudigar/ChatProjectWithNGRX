@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store/src';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { chatActionState } from './app.state';
 import { ChatData } from './chat-data';
 
 @Injectable({ providedIn: 'root' })

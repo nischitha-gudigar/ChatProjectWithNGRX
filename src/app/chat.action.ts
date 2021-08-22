@@ -1,2 +1,7 @@
-import { createAction } from '@ngrx/store';
-export const setMessage = createAction('[chat-List Component] SETMESSAGE');
+import { createAction, props } from '@ngrx/store';
+import { ChatData } from './chat-data';
+
+export const addChat = createAction(
+  '[Chat List Component] AddChat',
+  props<{ chatData: ChatData[] }>()
+);
