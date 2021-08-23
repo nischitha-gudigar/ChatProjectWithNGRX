@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { chatActionState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
@@ -13,10 +13,10 @@ import { addChat } from '../chat.action';
 export class ChatListComponent implements OnInit {
   chatListDataForDisplay: ChatData[];
   messageData: chatActionState[];
-  constructor(private chatService: ChatList) {}
+  constructor(private chatService: ChatList, private store: Store) {}
 
   ngOnInit() {
-    console.log('asdasdas');
+    console.log('I am in chat list');
     this.messageData = Object.assign([], this.messageData);
     this.chatService.getChatList().subscribe(resultData => {
       this.chatListDataForDisplay = resultData.map(res => {
@@ -28,6 +28,6 @@ export class ChatListComponent implements OnInit {
       });
     });
     console.log(this.messageData);
-    // this.store.dispatch(addChat({ messageData: this.messageData }));
+    this.store.dispatch(addChat({ messageData: this.messageData }));
   }
 }
