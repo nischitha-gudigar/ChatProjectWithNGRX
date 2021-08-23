@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { chatActionState, MyAppState } from '../app.state';
+import { chatActionState, ChatStore, MyAppState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
 import { addChat } from '../chat.action';
@@ -16,9 +16,11 @@ export class ChatListComponent implements OnInit {
   chatListDataForDisplay: ChatData[];
   messageData = [];
   messageDataForDisplay;
+  chatArray$;
   constructor(
     private chatService: ChatList,
-    private store: Store<MyAppState>
+    private store: Store<MyAppState>,
+    private readonly myStore: ChatStore
   ) {}
 
   ngOnInit() {
@@ -36,7 +38,9 @@ export class ChatListComponent implements OnInit {
       });
     });
 
-    this.messageDataForDisplay = this.store.select(selectMsg);
-    console.log(this.messageDataForDisplay);
+    // this.messageDataForDisplay = this.store.select(selectMsg);
+    // console.log(this.messageDataForDisplay);
+
+    this.chatArray$ = this.myStore.messages$;
   }
 }
