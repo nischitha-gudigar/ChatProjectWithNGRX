@@ -39,17 +39,15 @@ export class ChatDisplayComponent implements OnInit {
     this.messageForm = this.fb.group({
       message: ['']
     });
+
+    this.messageDataForDisplay = this.store.select('messages');
   }
 
   saveMessage() {
-    this.messageDataForDisplay = this.store.select(selectMsg);
-
-    this.messageDataForDisplay.forEach(res => console.log(res));
-
     this.messageData = Object.assign([], this.messageData);
     this.messageData.push({
       chatId: this.id,
-      chatParticular: [this.messageForm.value]
+      chatParticular: [this.messageForm.value.message]
     });
     this.store.dispatch(addChat({ messageData: this.messageData }));
     this.messageForm.reset();

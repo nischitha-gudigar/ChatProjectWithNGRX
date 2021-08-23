@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MyAppState } from '../app.state';
+import { Observable } from 'rxjs';
+import { chatActionState, MyAppState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
 import { addChat } from '../chat.action';
@@ -14,12 +15,11 @@ import { selectMsg } from '../chat.reducer';
 export class ChatListComponent implements OnInit {
   chatListDataForDisplay: ChatData[];
   messageData = [];
-  messageDataForDisplay;
-  chatArray$;
-  constructor(
-    private chatService: ChatList,
-    private store: Store<MyAppState>
-  ) {}
+  messageDataForDisplay$: Observable<chatActionState[]>;
+
+  constructor(private chatService: ChatList, private store: Store<MyAppState>) {
+    this.messageDataForDisplay$ = this.store.select('messages');
+  }
 
   ngOnInit() {
     console.log('I am in chat list');
@@ -35,8 +35,5 @@ export class ChatListComponent implements OnInit {
         return res;
       });
     });
-
-    this.messageDataForDisplay = this.store.select(selectMsg);
-    console.log(this.messageDataForDisplay);
   }
 }
