@@ -22,7 +22,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    StoreModule.forRoot({ message: chatReducer })
+    StoreModule.forRoot({ messages: chatReducer })
   ],
   declarations: [AppComponent, ChatListComponent, ChatDisplayComponent],
   bootstrap: [AppComponent]

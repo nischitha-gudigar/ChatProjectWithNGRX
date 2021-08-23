@@ -11,16 +11,27 @@ import { addChat } from '../chat.action';
   styleUrls: ['./chat-list.component.css']
 })
 export class ChatListComponent implements OnInit {
-  chatListData: ChatData[];
+  chatListDataForDisplay: ChatData[];
+  messageData: chatActionState[];
   constructor(
     private chatService: ChatList,
-    private store: Store<chatActionState>
+    private store: Store<chatActionState[]>
   ) {}
 
   ngOnInit() {
     this.chatService.getChatList().subscribe(resultData => {
-      this.chatListData = resultData.map(res => res);
+      this.chatListDataForDisplay = resultData.map(res => res);
     });
-    this.store.dispatch(addChat(this.chatListData));
+    setTimeout(() => {
+      this.chatListDataForDisplay.forEach(res =>
+        this.messageData.push({
+          chatId: res.id,
+          chatParticular: [res.content]
+        })
+      );
+      console.log('inside set time');
+      console.log(this.messageData);
+      // this.store.dispatch(addChat({this.messageData}));
+    }, 1000);
   }
 }

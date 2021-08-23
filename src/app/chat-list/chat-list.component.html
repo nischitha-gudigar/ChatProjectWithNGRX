@@ -4,7 +4,7 @@
       <div class="panel-head">
         <h5>Contacts List</h5>
       </div>
-      <div class="panel-body" *ngFor="let chatData of chatListData">
+      <div class="panel-body" *ngFor="let chatData of chatListDataForDisplay">
         <div class="card chatcards" [routerLink]="['/chat',chatData.id]">
           <div class="row">
             <div class="col-sm-2 chatimg">

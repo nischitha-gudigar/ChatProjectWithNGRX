@@ -2,13 +2,11 @@ import { createReducer, on, Action } from '@ngrx/store';
 import { chatActionState } from './app.state';
 import { addChat } from './chat.action';
 
-export const initialState: chatActionState = {
-  chats: []
-};
+export const initialState: chatActionState[] = [];
 
 const _chatReducer = createReducer(
   initialState,
-  on(addChat, (state, { chatData }) => [...chatData])
+  on(addChat, (state, { messageData }) => [...messageData])
 );
 
 export function chatReducer(state, action) {
