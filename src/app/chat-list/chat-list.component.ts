@@ -12,22 +12,25 @@ import { addChat } from '../chat.action';
 })
 export class ChatListComponent implements OnInit {
   chatListDataForDisplay: ChatData[];
-  messageData: chatActionState[];
+  messageData = [];
   constructor(private chatService: ChatList, private store: Store) {}
 
   ngOnInit() {
     console.log('I am in chat list');
-    this.messageData = Object.assign([], this.messageData);
     this.chatService.getChatList().subscribe(resultData => {
       this.chatListDataForDisplay = resultData.map(res => {
-        this.messageData.push({
+        let mData = {
           chatId: res.id,
-          chatParticular: [res.content]
-        });
+          chatParticular: res.content
+        };
+        this.messageData = Object.assign([], this.messageData);
+        this.messageData.push(mData);
         return res;
       });
     });
-    console.log(this.messageData);
-    this.store.dispatch(addChat({ messageData: this.messageData }));
+    setTimeout(() => {
+      console.log(this.messageData);
+      this.store.dispatch(addChat({ messageData: this.messageData }));
+    }, 1000);
   }
 }
