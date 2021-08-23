@@ -8,7 +8,7 @@ import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatDisplayComponent } from './chat-display/chat-display.component';
 import { RouterModule, Routes } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
-import { chatReducer } from './chat-reducer';
+import { chatReducer } from './chat.reducer';
 
 const routes: Routes = [
   { path: 'contacts', component: ChatListComponent },
