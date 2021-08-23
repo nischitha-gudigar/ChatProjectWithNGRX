@@ -7,6 +7,7 @@ import { MyAppState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
 import { addChat } from '../chat.action';
+import { selectMsg } from '../chat.reducer';
 
 @Component({
   selector: 'app-chat-display',
@@ -18,6 +19,7 @@ export class ChatDisplayComponent implements OnInit {
   selectedChatData: ChatData;
   id: number;
   messageData = [];
+  messageDataForDisplay;
 
   constructor(
     private fb: FormBuilder,
@@ -40,10 +42,14 @@ export class ChatDisplayComponent implements OnInit {
   }
 
   saveMessage() {
+    this.messageDataForDisplay = this.store.select(selectMsg);
+
+    this.messageDataForDisplay.forEach(res => console.log(res));
+
     this.messageData = Object.assign([], this.messageData);
     this.messageData.push({
       chatId: this.id,
-      chatParticular: this.messageForm.value
+      chatParticular: [this.messageForm.value]
     });
     this.store.dispatch(addChat({ messageData: this.messageData }));
     this.messageForm.reset();

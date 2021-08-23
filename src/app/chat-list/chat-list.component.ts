@@ -27,7 +27,7 @@ export class ChatListComponent implements OnInit {
       this.chatListDataForDisplay = resultData.map(res => {
         let mData = {
           chatId: res.id,
-          chatParticular: res.content
+          chatParticular: [res.content]
         };
         this.messageData = Object.assign([], this.messageData);
         this.messageData.push(mData);
