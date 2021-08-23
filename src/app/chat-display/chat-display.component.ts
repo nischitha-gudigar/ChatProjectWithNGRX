@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { MyAppState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
+import { addChat } from '../chat.action';
 
 @Component({
   selector: 'app-chat-display',
@@ -14,12 +17,14 @@ export class ChatDisplayComponent implements OnInit {
   messageForm: FormGroup;
   selectedChatData: ChatData;
   id: number;
+  messageData = [];
 
   constructor(
     private fb: FormBuilder,
     private chatService: ChatList,
     private routeActivated: ActivatedRoute,
-    private route: Router
+    private route: Router,
+    private store: Store<MyAppState>
   ) {}
 
   ngOnInit() {
@@ -35,8 +40,12 @@ export class ChatDisplayComponent implements OnInit {
   }
 
   saveMessage() {
-    console.log('Hii');
-    console.log(this.messageForm);
+    this.messageData = Object.assign([], this.messageData);
+    this.messageData.push({
+      chatId: this.id,
+      chatParticular: this.messageForm.value
+    });
+    this.store.dispatch(addChat({ messageData: this.messageData }));
     this.messageForm.reset();
   }
 

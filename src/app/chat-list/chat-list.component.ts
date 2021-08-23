@@ -5,6 +5,7 @@ import { chatActionState, MyAppState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
 import { addChat } from '../chat.action';
+import { selectMsg } from '../chat.reducer';
 
 @Component({
   selector: 'app-chat-list',
@@ -14,7 +15,7 @@ import { addChat } from '../chat.action';
 export class ChatListComponent implements OnInit {
   chatListDataForDisplay: ChatData[];
   messageData = [];
-  data;
+  messageDataForDisplay;
   constructor(
     private chatService: ChatList,
     private store: Store<MyAppState>
@@ -35,7 +36,7 @@ export class ChatListComponent implements OnInit {
       });
     });
 
-    this.data = this.store.select('messages');
-    console.log(this.data);
+    this.messageDataForDisplay = this.store.select(selectMsg);
+    console.log(this.messageDataForDisplay);
   }
 }
