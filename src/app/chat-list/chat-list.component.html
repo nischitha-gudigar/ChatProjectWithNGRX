@@ -26,9 +26,6 @@
               <div *ngIf="chatData.content && !chatData.message">
                 <span class="text">{{chatData.content}}</span>
               </div>
-              <li *ngFor="let movie of (chatArray$ | async)">
-                {{ movie.chatId }}
-              </li>
             </div>
           </div>
         </div>

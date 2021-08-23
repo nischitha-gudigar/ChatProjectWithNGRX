@@ -10,7 +10,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { chatReducer } from './chat.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { ChatStore } from './app.state';
 
 const routes: Routes = [
   { path: 'contacts', component: ChatListComponent },
@@ -29,7 +28,6 @@ const routes: Routes = [
       maxAge: 25
     })
   ],
-  providers: [ChatStore],
   declarations: [AppComponent, ChatListComponent, ChatDisplayComponent],
   bootstrap: [AppComponent]
 })
