@@ -25,9 +25,14 @@
                   </div>
                 </div>
               </div> -->
-              <div *ngIf="chatData.content && !chatData.message">
-                <span class="text">{{chatData.content}}</span>
+              <div *ngFor="let item of chatMsgArray  ; let last = last;">
+                <div *ngIf="last">
+                  <span class="text">{{item}}</span>
+                </div>
               </div>
+              <!-- <div *ngIf="chatData.content && !chatData.message">
+                <span class="text">{{chatData.content}}</span>
+              </div> -->
             </div>
           </div>
         </div>
