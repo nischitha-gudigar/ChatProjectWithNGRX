@@ -15,6 +15,7 @@ const _chatReducer = createReducer(
   initialState,
   on(addChat, (state: chatActionState[], message) => {
     return {
+      ...state,
       ...message.messageData
     };
   })
