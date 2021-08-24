@@ -16,34 +16,43 @@ import { addChat } from '../chat.action';
 export class ChatListComponent implements OnInit {
   chatListDataForDisplay: ChatData[];
   messageData = [];
-  messageDataForDisplay$: Observable<chatActionState[]>;
+  // messageDataForDisplay$: Observable<chatActionState[]>;
   /* for taking previous msg */
   chatMsgArray: string[];
 
   constructor(private chatService: ChatList, private store: Store<MyAppState>) {
-    this.messageDataForDisplay$ = this.store.select('messages');
+    // this.messageDataForDisplay$ = this.store.select('messages');
   }
 
   ngOnInit() {
     this.chatService.getChatList().subscribe(resultData => {
       this.chatListDataForDisplay = resultData.map(res => {
         this.chatMsgArray = Object.assign([], []);
-        this.store.pipe(
-          select('messages'),
-          map(state => {
-            for (let key in state) {
-              if (state[key].chatId == res.id) {
-                this.chatMsgArray = [...state[key].chatParticular];
-              }
-            }
-          })
-        );
+
+        // this.store.pipe(
+        //   select('messages'),
+        //   map(state => {
+        //     console.log('asdasdasd');
+        //     for (let key in state) {
+        //       if (state[key].chatId == res.id) {
+        //         this.chatMsgArray = [...state[key].chatParticular];
+        //         console.log(this.chatMsgArray);
+        //       }
+        //     }
+        //   })
+        // );
+
+        this.store.select('messages').subscribe(res1 => {
+          console.log('I am in select' + res1 + '  ' + typeof res1);
+          console.log(res1.forEach(resData => resData.chatId == res.id));
+        });
+
         this.chatMsgArray.push(res.content);
         let mData = {
           chatId: res.id,
           chatParticular: this.chatMsgArray
         };
-        this.messageData = Object.assign([], []);
+        this.messageData = Object.assign([], this.messageData);
         this.messageData.push(mData);
         this.store.dispatch(addChat({ messageData: this.messageData }));
         return res;

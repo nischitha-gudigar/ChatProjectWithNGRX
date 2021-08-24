@@ -46,7 +46,7 @@ export class ChatDisplayComponent implements OnInit {
     this.messageForm = this.fb.group({
       message: ['']
     });
-
+    this.chatArray = Object.assign([], []);
     this.messageDataForDisplay$ = this.store.pipe(
       select('messages'),
       map(state => {
@@ -61,6 +61,7 @@ export class ChatDisplayComponent implements OnInit {
   }
 
   saveMessage() {
+    console.log(this.chatArray);
     this.messageData = Object.assign([], []);
     this.chatArray.push(this.messageForm.value.message);
     this.messageData.push({
