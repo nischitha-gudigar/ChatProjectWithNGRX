@@ -5,7 +5,6 @@ import { chatActionState, MyAppState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
 import { addChat } from '../chat.action';
-import { selectMsg } from '../chat.reducer';
 
 @Component({
   selector: 'app-chat-list',
@@ -22,7 +21,6 @@ export class ChatListComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('I am in chat list');
     this.chatService.getChatList().subscribe(resultData => {
       this.chatListDataForDisplay = resultData.map(res => {
         let mData = {

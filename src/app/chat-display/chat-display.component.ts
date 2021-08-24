@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { MyAppState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
 import { addChat } from '../chat.action';
-import { selectMsg } from '../chat.reducer';
+import { selectMsg } from '../chat.selector';
 
 @Component({
   selector: 'app-chat-display',
@@ -18,8 +19,14 @@ export class ChatDisplayComponent implements OnInit {
   messageForm: FormGroup;
   selectedChatData: ChatData;
   id: number;
+  /* contains id and chats in array */
   messageData = [];
-  messageDataForDisplay;
+
+  /* taken from store */
+  messageDataForDisplay$;
+
+  /* for taking previous msg */
+  chatArray: string[];
 
   constructor(
     private fb: FormBuilder,
@@ -40,14 +47,25 @@ export class ChatDisplayComponent implements OnInit {
       message: ['']
     });
 
-    this.messageDataForDisplay = this.store.select('messages');
+    this.messageDataForDisplay$ = this.store.pipe(
+      select('messages'),
+      map(state => {
+        for (let key in state) {
+          if (state[key].chatId == this.id) {
+            this.chatArray = [...state[key].chatParticular];
+            return state[key].chatParticular;
+          }
+        }
+      })
+    );
   }
 
   saveMessage() {
     this.messageData = Object.assign([], this.messageData);
+    this.chatArray.push(this.messageForm.value.message);
     this.messageData.push({
       chatId: this.id,
-      chatParticular: [this.messageForm.value.message]
+      chatParticular: this.chatArray
     });
     this.store.dispatch(addChat({ messageData: this.messageData }));
     this.messageForm.reset();

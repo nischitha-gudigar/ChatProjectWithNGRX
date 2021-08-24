@@ -14,12 +14,12 @@
     </div>
   </div>
   <div class="card cardmsg">
-    <p class="receivermsg">{{selectedChatData?.content}}</p>
-    <!-- <div *ngFor="let item of messageForDisplay">
+    <!-- <p class="receivermsg">{{selectedChatData?.content}}</p> -->
+    <div *ngFor="let item of messageDataForDisplay$ | async">
       <p class="sendermsg">
         {{item}}
       </p>
-    </div> -->
+    </div>
   </div>
   <div class="card-body">
     <form (ngSubmit)="saveMessage()" [formGroup]="messageForm">
@@ -43,7 +43,6 @@
       >
         back
       </button>
-      {{messageDataForDisplay | async |json}}
     </form>
   </div>
 </div>

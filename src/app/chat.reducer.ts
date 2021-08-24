@@ -15,7 +15,6 @@ const _chatReducer = createReducer(
   initialState,
   on(addChat, (state: chatActionState[], message) => {
     return {
-      ...state,
       ...message.messageData
     };
   })
@@ -24,10 +23,3 @@ const _chatReducer = createReducer(
 export function chatReducer(state: chatActionState[], action: Action) {
   return _chatReducer(state, action);
 }
-
-const getMessage = createFeatureSelector<MyAppState>('messages');
-
-export const selectMsg = createSelector(
-  getMessage,
-  state => state.messages
-);
