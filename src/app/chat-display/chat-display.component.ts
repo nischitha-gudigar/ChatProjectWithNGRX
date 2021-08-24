@@ -62,6 +62,7 @@ export class ChatDisplayComponent implements OnInit {
 
   saveMessage() {
     this.messageData = Object.assign([], this.messageData);
+    console.log(this.chatArray);
     this.chatArray.push(this.messageForm.value.message);
     this.messageData.push({
       chatId: this.id,
