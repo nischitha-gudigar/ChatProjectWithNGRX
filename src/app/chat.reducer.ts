@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Action } from '@ngrx/store';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { chatActionState, MyAppState } from './app.state';
+import { chatActionState } from './app.state';
 import { addChat } from './chat.action';
 
 export const initialState: chatActionState[] = [];

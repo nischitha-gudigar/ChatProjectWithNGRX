@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { MyAppState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
 import { addChat } from '../chat.action';
-import { selectMsg } from '../chat.selector';
 
 @Component({
   selector: 'app-chat-display',
@@ -61,9 +59,9 @@ export class ChatDisplayComponent implements OnInit {
   }
 
   saveMessage() {
-    console.log(this.chatArray);
-    this.messageData = Object.assign([], []);
+    this.messageData = Object.assign([]);
     this.chatArray.push(this.messageForm.value.message);
+
     this.messageData.push({
       chatId: this.id,
       chatParticular: this.chatArray

@@ -7,6 +7,7 @@ import { chatActionState, MyAppState } from '../app.state';
 import { ChatData } from '../chat-data';
 import { ChatList } from '../chat-list.service';
 import { addChat } from '../chat.action';
+import { selectMsg } from '../chat.selector';
 
 @Component({
   selector: 'app-chat-list',
@@ -16,12 +17,12 @@ import { addChat } from '../chat.action';
 export class ChatListComponent implements OnInit {
   chatListDataForDisplay: ChatData[];
   messageData = [];
-  // messageDataForDisplay$: Observable<chatActionState[]>;
+  messageDataForDisplay$: Observable<chatActionState[]>;
   /* for taking previous msg */
   chatMsgArray: string[];
 
   constructor(private chatService: ChatList, private store: Store<MyAppState>) {
-    // this.messageDataForDisplay$ = this.store.select('messages');
+    this.messageDataForDisplay$ = this.store.select(selectMsg);
   }
 
   ngOnInit() {
@@ -29,29 +30,29 @@ export class ChatListComponent implements OnInit {
       this.chatListDataForDisplay = resultData.map(res => {
         this.chatMsgArray = Object.assign([], []);
 
-        // this.store.pipe(
-        //   select('messages'),
-        //   map(state => {
-        //     console.log('asdasdasd');
-        //     for (let key in state) {
-        //       if (state[key].chatId == res.id) {
-        //         this.chatMsgArray = [...state[key].chatParticular];
-        //         console.log(this.chatMsgArray);
-        //       }
-        //     }
-        //   })
-        // );
+        this.store
+          .pipe(
+            select('messages'),
+            map(state => {
+              for (let key in state) {
+                if (state[key].chatId == res.id) {
+                  this.chatMsgArray = [...state[key].chatParticular];
+                  break;
+                }
+              }
+            })
+          )
+          .subscribe();
+        if (this.chatMsgArray.length == 0) {
+          this.chatMsgArray.push(res.content);
+        }
 
-        this.store.select('messages').subscribe(res1 => {
-          console.log('I am in select' + res1 + '  ' + typeof res1);
-          console.log(res1.forEach(resData => resData.chatId == res.id));
-        });
-
-        this.chatMsgArray.push(res.content);
         let mData = {
           chatId: res.id,
           chatParticular: this.chatMsgArray
         };
+
+        res.message = this.chatMsgArray;
         this.messageData = Object.assign([], this.messageData);
         this.messageData.push(mData);
         this.store.dispatch(addChat({ messageData: this.messageData }));

@@ -6,5 +6,5 @@ export interface ChatData {
   content: string;
   read: boolean;
   date: string;
-  message: []; //sender messages
+  message: string[]; //sender messages
 }
